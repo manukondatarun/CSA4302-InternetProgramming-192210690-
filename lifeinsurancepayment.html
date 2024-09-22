@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Page</title>
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #74ebd5, #acb6e5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            position: relative;
+        }
+
+        .container {
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+            width: 90%;
+            max-width: 900px;
+            display: flex;
+            justify-content: center;
+            transition: transform 0.3s ease;
+        }
+
+        .container:hover {
+            transform: scale(1.05);
+        }
+
+        .plan-info {
+            position: absolute;
+            left: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+            padding: 30px;
+            background: linear-gradient(135deg, #f9f9f9, #ffffff);
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            width: 250px;
+        }
+
+        .plan-info h3 {
+            margin: 0;
+            color: #1a73e8;
+            font-size: 38px;
+            font-weight: bold;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .plan-info p {
+            margin-top: 15px;
+            font-size: 26px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .plan-info p span {
+            font-size: 32px;
+            color: #ff5722;
+            font-weight: bold;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .payment-form {
+            padding: 30px;
+            background: linear-gradient(135deg, #f9f9f9, #ffffff);
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            margin-left: 300px; /* Space for the plan-info */
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 25px;
+            font-size: 30px;
+            font-weight: bold;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            color: #333;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .form-group {
+            position: relative;
+            margin-bottom: 25px;
+        }
+
+        .form-group i {
+            position: absolute;
+            top: 50%;
+            left: 12px;
+            transform: translateY(-50%);
+            color: #1a73e8;
+        }
+
+        input[type="text"], input[type="tel"], input[type="date"], input[type="number"] {
+            width: 100%;
+            padding: 12px 12px 12px 45px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 12px;
+            background-color: #fff;
+            font-size: 18px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="text"]:focus, input[type="tel"]:focus, input[type="date"]:focus, input[type="number"]:focus {
+            border-color: #1a73e8;
+            outline: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #ff9800, #f44336);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        button:hover {
+            background: linear-gradient(135deg, #f44336, #d32f2f);
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 25px;
+            padding: 15px 25px;
+            background: linear-gradient(135deg, #1a73e8, #0b63cc);
+            color: white;
+            border-radius: 12px;
+            text-align: center;
+            text-decoration: none;
+            font-size: 18px;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .back-btn:hover {
+            background: linear-gradient(135deg, #0b63cc, #0856a0);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Selected Plan -->
+        <div class="plan-info">
+            <h3>Selected Plan</h3>
+            <p><strong>Plan:</strong> <span id="planName">Not Selected</span></p>
+            <p><strong>Cost:</strong> <span id="planCost">N/A</span></p>
+        </div>
+
+        <!-- Payment Form -->
+        <div class="payment-form">
+            <h2>Payment Information</h2>
+
+            <form action="confirm.html" method="POST">
+                <div class="form-group">
+                    <i class="fas fa-credit-card" aria-hidden="true"></i>
+                    <label for="cardNumber">Credit Card Number:</label>
+                    <input type="tel" id="cardNumber" name="cardNumber" pattern="[0-9\s]{13,19}" placeholder="Enter your credit card number" required>
+                </div>
+
+                <div class="form-group">
+                    <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+                    <label for="expiryDate">Expiration Date:</label>
+                    <input type="date" id="expiryDate" name="expiryDate" required>
+                </div>
+
+                <div class="form-group">
+                    <i class="fas fa-lock" aria-hidden="true"></i>
+                    <label for="cvv">CVV:</label>
+                    <input type="number" id="cvv" name="cvv" placeholder="Enter CVV" required>
+                </div>
+
+                <div class="form-group">
+                    <i class="fas fa-home" aria-hidden="true"></i>
+                    <label for="billingAddress">Billing Address:</label>
+                    <input type="text" id="billingAddress" name="billingAddress" placeholder="Enter your billing address" required>
+                </div>
+
+                <button type="submit">Proceed Payment</button>
+            </form>
+
+            <a href="lifeinsuranceplan.html" class="back-btn">Back to Plans</a>
+        </div>
+    </div>
+
+    <script>
+        // Function to retrieve selected plan and cost from query parameters
+        function getSelectedPlan() {
+            const params = new URLSearchParams(window.location.search);
+            const plan = params.get('plan') || 'Not Selected';
+            const cost = params.get('cost') || 'N/A';
+            
+            document.getElementById('planName').textContent = plan;
+            document.getElementById('planCost').textContent = cost;
+        }
+
+        // Call function on page load
+        getSelectedPlan();
+    </script>
+</body>
+</html>

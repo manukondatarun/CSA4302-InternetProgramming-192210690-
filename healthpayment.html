@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Insurance Payment</title>
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #e3994e, #f4f4f4);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: rgb(208, 217, 120);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(67, 49, 49, 0.1);
+            width: 80%;
+            max-width: 1000px;
+        }
+
+        .plan-info {
+            flex: 1;
+            margin-right: 20px;
+            padding: 20px;
+            background: linear-gradient(135deg, #0072ff, #00c6ff);
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .plan-info h3 {
+            margin: 0 0 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .plan-info p {
+            margin: 0;
+        }
+
+        .form-container {
+            flex: 2;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        input[type="text"], input[type="date"], input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #0072ff, #00c6ff);
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        button:hover {
+            background: linear-gradient(135deg, #005bb5, #0072ff);
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 20px;
+            background: linear-gradient(135deg, #ff9900, #ff6f00);
+            color: white;
+            border-radius: 5px;
+            text-align: center;
+            text-decoration: none;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .back-btn:hover {
+            background: linear-gradient(135deg, #e68a00, #ff9900);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="plan-info">
+            <h3>Selected Plan</h3>
+            <p><strong>Plan:</strong> <span id="planName">Not Selected</span></p>
+        </div>
+
+        <div class="form-container">
+            <h2>Payment Information</h2>
+
+            <form action="healthplans.html" method="post">
+                <!-- Credit Card Number -->
+                <label for="cardNumber">Credit Card Number:</label>
+                <input type="text" id="cardNumber" name="cardNumber" required>
+
+                <!-- Expiration Date -->
+                <label for="expiryDate">Expiration Date:</label>
+                <input type="date" id="expiryDate" name="expiryDate" required>
+
+                <!-- CVV -->
+                <label for="cvv">CVV:</label>
+                <input type="number" id="cvv" name="cvv" required>
+
+                <!-- Billing Address -->
+                <label for="billingAddress">Billing Address:</label>
+                <input type="text" id="billingAddress" name="billingAddress" required>
+
+                <button type="submit">Submit Payment</button>
+            </form>
+
+            <a href="healthplans.html" class="back-btn">Back to Select Another Plans</a>
+        </div>
+    </div>
+
+    <script>
+        // Function to retrieve selected plan from query parameters
+        function getSelectedPlan() {
+            const params = new URLSearchParams(window.location.search);
+            const plan = params.get('plan') || 'Not Selected';
+            document.getElementById('planName').textContent = plan;
+        }
+
+        // Call function on page load
+        getSelectedPlan();
+    </script>
+</body>
+</html>

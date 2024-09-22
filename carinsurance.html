@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Insurance Application</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #6dd5ed, #2193b0);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: #333;
+        }
+
+        .form-container {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+            width: 400px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 26px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .form-step {
+            display: none;
+        }
+
+        .form-step.active {
+            display: block;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            color: #555;
+            font-weight: bold;
+        }
+
+        input[type="text"], input[type="email"], input[type="date"], select {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 15px;
+            border: 2px solid #2193b0;
+            border-radius: 10px;
+            box-sizing: border-box;
+            transition: border 0.3s ease;
+        }
+
+        input:focus {
+            border: 2px solid #00ffff;
+            outline: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            background-color: #28a745;
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        button:disabled {
+            background-color: #d6d6d6;
+            cursor: not-allowed;
+        }
+
+        button:hover:not(:disabled) {
+            background-color: #218838;
+            transform: scale(1.05);
+        }
+
+        .plans-container {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+            width: 80%;
+            max-width: 800px; /* Increased max-width for better visibility */
+            display: none; /* Hide plans section initially */
+            margin: auto; /* Center the plans container */
+        }
+
+        .plans {
+            display: flex; /* Use flexbox for side-by-side layout */
+            justify-content: space-around; /* Distribute space evenly */
+            flex-wrap: wrap; /* Allow wrapping on smaller screens */
+            margin-top: 20px; /* Add space above the plans */
+        }
+
+        .plan {
+            flex: 0 1 30%; /* Allow plans to take up to 30% width */
+            padding: 20px; /* Adjusted padding */
+            margin: 10px; /* Space between plans */
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            background-color: #f8f9fa; /* Light background for plans */
+            transition: box-shadow 0.3s ease, transform 0.3s ease;
+            text-align: center; /* Center align text */
+            position: relative; /* Position for the hover effect */
+            overflow: hidden; /* Prevent content overflow */
+        }
+
+        .plan:hover {
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);
+            transform: translateY(-5px); /* Lift effect */
+        }
+
+        .plan-header {
+            background-color: #007bff; /* Header color */
+            color: #fff;
+            padding: 15px; /* Increased padding */
+            border-radius: 10px 10px 0 0;
+            text-align: center; /* Center align header */
+        }
+
+        .plan-details {
+            padding: 10px; /* Adjusted padding */
+        }
+
+        .plan-price {
+            font-size: 24px; /* Slightly decreased font size for better balance */
+            font-weight: bold;
+            color: #333;
+            margin: 10px 0;
+        }
+
+        .plan-button {
+            background-color: #007bff;
+            text-align: center;
+            padding: 10px; /* Adjusted padding */
+            color: #fff;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+            display: inline-block;
+            margin-top: 10px;
+            width: 100%; /* Full-width button */
+        }
+
+        .plan-button:hover {
+            background-color: #0056b3;
+        }
+
+        @media (max-width: 768px) {
+            .plans {
+                flex-direction: column; /* Stack plans vertically on smaller screens */
+                align-items: center; /* Center align plans */
+            }
+
+            .plan {
+                flex: 0 1 90%; /* Full width on smaller screens */
+                margin: 10px 0; /* Adjust margin for vertical layout */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .form-container {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Car Insurance Application</h2>
+        <form id="carInsuranceForm" action="car.php" method="post">
+            <!-- Step 1: Personal Details -->
+            <div class="form-step active" id="step1">
+                <label for="fullname">Full Name:</label>
+                <input type="text" id="fullname" name="fullname" required placeholder="Enter your full name">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required placeholder="Enter your email">
+                <label for="phone">Phone Number:</label>
+                <input type="text" id="phone" name="phone" required placeholder="Enter your phone number">
+                <label for="dob">Date of Birth:</label>
+                <input type="date" id="dob" name="dob" required>
+            </div>
+
+            <!-- Step 2: Car Details -->
+            <div class="form-step" id="step2">
+                <label for="carModel">Car Model:</label>
+                <input type="text" id="carModel" name="carModel" required placeholder="Enter your car model">
+                <label for="year">Car Manufacturing Year:</label>
+                <input type="text" id="year" name="year" required placeholder="Enter the manufacturing year">
+            </div>
+
+            <!-- Step 3: Insurance Dates -->
+            <div class="form-step" id="step3">
+                <label for="startDate">Policy Start Date:</label>
+                <input type="date" id="startDate" name="startDate" required>
+                <label for="endDate">Policy End Date:</label>
+                <input type="date" id="endDate" name="endDate" required>
+            </div>
+
+            <div class="nav-buttons">
+                <button type="button" id="nextBtn">Next</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="plans-container" id="plans">
+        <h1 style="text-align: center; margin-bottom: 20px;">Vehicle Insurance Plans</h1>
+        <div class="plans">
+            <div class="plan" onclick="selectPlan('Basic Plan', '500')">
+                <div class="plan-header">
+                    <h2>Basic Plan</h2>
+                </div>
+                <div class="plan-details">
+                    <p class="plan-price">₹500/month</p>
+                </div>
+                <a href="#" class="plan-button">Select Plan</a>
+            </div>
+            <div class="plan" onclick="selectPlan('Standard Plan', '800')">
+                <div class="plan-header">
+                    <h2>Standard Plan</h2>
+                </div>
+                <div class="plan-details">
+                    <p class="plan-price">₹800/month</p>
+                </div>
+                <a href="#" class="plan-button">Select Plan</a>
+            </div>
+            <div class="plan" onclick="selectPlan('Premium Plan', '1200')">
+                <div class="plan-header">
+                    <h2>Premium Plan</h2>
+                </div>
+                <div class="plan-details">
+                    <p class="plan-price">₹1,200/month</p>
+                </div>
+                <a href="#" class="plan-button">Select Plan</a>
+            </div>
+        </div>
+        <button id="submitBtn" style="display:none; margin-top: 20px;">Submit</button>
+    </div>
+
+    <script>
+        let currentStep = 0;
+        const steps = document.querySelectorAll('.form-step');
+        const nextBtn = document.getElementById('nextBtn');
+        const plansContainer = document.getElementById('plans');
+        const submitBtn = document.getElementById('submitBtn');
+        let selectedPlan = '';
+        let selectedCost = '';
+
+        function showStep(step) {
+            steps.forEach((el, index) => {
+                el.classList.toggle('active', index === step);
+            });
+        }
+
+        function validateStep(step) {
+            const inputs = steps[step].querySelectorAll('input[required]');
+            return Array.from(inputs).every(input => input.value.trim() !== '');
+        }
+
+        nextBtn.addEventListener('click', () => {
+            if (validateStep(currentStep)) {
+                currentStep++;
+                if (currentStep < steps.length) {
+                    showStep(currentStep);
+                } else {
+                    document.querySelector('.form-container').style.display = 'none';
+                    plansContainer.style.display = 'block';
+                }
+            } else {
+                alert("Please fill out all required fields.");
+            }
+        });
+
+        function selectPlan(plan, cost) {
+            selectedPlan = plan;
+            selectedCost = cost;
+
+            // Add hidden inputs to the form
+            document.getElementById('carInsuranceForm').insertAdjacentHTML('beforeend', `
+                <input type="hidden" name="plan" value="${selectedPlan}">
+                <input type="hidden" name="cost" value="${selectedCost}">
+            `);
+            submitBtn.style.display = 'block';
+        }
+
+        submitBtn.addEventListener('click', () => {
+            // Validate before submission
+            if (validateStep(currentStep - 1)) {
+                document.getElementById('carInsuranceForm').submit();
+            } else {
+                alert("Please fill out all required fields before submitting.");
+            }
+        });
+
+        showStep(currentStep);
+    </script>
+
+</body>
+</html>
